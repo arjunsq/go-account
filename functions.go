@@ -9,6 +9,7 @@ import (
 func signup(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("method:", r.Method) //get request method
 	if r.Method == "GET" {
+		fmt.Println("Inside signup")
 		t, _ := template.ParseFiles("signup.html")
 		t.Execute(w, nil)
 	} else {
@@ -20,7 +21,8 @@ func signup(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, responsevalue) // write data to response
 	}
 }
-func login(w http.ResponseWriter, r *http.Request) {
+
+func index(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("method:", r.Method) //get request method
 	if r.Method == "GET" {
 		fmt.Println("Inside login")
@@ -31,7 +33,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 		// logic part of log in
 		fmt.Println("username:", r.Form["username"])
 		fmt.Println("password:", r.Form["password"])
-		responsevalue := "Username: " + r.Form["username"][0] + " Password: " + r.Form["password"][0] + " registered successfully"
+		responsevalue := "Username: " + r.Form["username"][0] + " Password: " + r.Form["password"][0] + " logged in successfully"
 		fmt.Fprintf(w, responsevalue) // write data to response
 	}
 }
