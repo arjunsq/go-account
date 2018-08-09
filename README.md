@@ -7,7 +7,7 @@ A Sign Up , Login Website
 After downloading the repo, run the following command 
 
 ```
-go run main.go 
+go run main.go functions.go
 ```
 
 When the server is up and running navigate browser to the address [http://localhost:9000/](http://localhost:9000/).
