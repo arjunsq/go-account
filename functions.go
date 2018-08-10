@@ -17,7 +17,15 @@ func signup(w http.ResponseWriter, r *http.Request) {
 		// logic part of log in
 		fmt.Println("username:", r.Form["username"])
 		fmt.Println("password:", r.Form["password"])
-		responsevalue := "Username: " + r.Form["username"][0] + " Password: " + r.Form["password"][0] + " registered successfully"
+		message := insert(r.Form["username"][0], r.Form["password"][0])
+		responsevalue := ""
+
+		if message != "" {
+			responsevalue = "Username: " + r.Form["username"][0] + " Password: " + r.Form["password"][0] + " registration failed"
+		} else {
+			responsevalue = "Username: " + r.Form["username"][0] + " Password: " + r.Form["password"][0] + " registered successfully"
+			printaccounts()
+		}
 		fmt.Fprintf(w, responsevalue) // write data to response
 	}
 }
