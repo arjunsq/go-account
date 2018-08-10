@@ -4,7 +4,7 @@ A Sign Up , Login Website implemented in Go, uses Mysql database in backend
 
 # How to run the server
 
-After downloading the repo, run the following command 
+After downloading the repo, run the following command from terminal in the downloaded directory
 
 ```
 go run main.go functions.go operations.go
