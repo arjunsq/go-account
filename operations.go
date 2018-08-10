@@ -11,28 +11,27 @@ import (
 func printaccounts() {
 	db, err := sql.Open("mysql", "user:qburstasd@tcp(localhost:3306)/mydb")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	} else {
 		fmt.Println("Connection Established")
 	}
-	fmt.Println("CONNECTED", db)
 	name := ""
 	password := ""
 	rows, err := db.Query("select * from ACCOUNTS;")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer rows.Close()
 	for rows.Next() {
 		err := rows.Scan(&name, &password)
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 		}
 		log.Println(name, password)
 	}
 	err = rows.Err()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer db.Close()
 }
@@ -40,7 +39,7 @@ func printaccounts() {
 func insert(user, password string) (message string) {
 	db, err := sql.Open("mysql", "user:qburstasd@tcp(localhost:3306)/mydb")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	} else {
 		fmt.Println("Connection Established")
 	}
@@ -83,4 +82,37 @@ func insert(user, password string) (message string) {
 	}
 	defer db.Close()
 	return message
+}
+
+func checkuser(cuser string, cpassword string) string {
+	db, err := sql.Open("mysql", "user:qburstasd@tcp(localhost:3306)/mydb")
+	if err != nil {
+		log.Println(err)
+	} else {
+		fmt.Println("Connection Established")
+	}
+	name := ""
+	password := ""
+	rows, err := db.Query("SELECT * FROM ACCOUNTS WHERE NAME= '" + cuser + "';")
+	if err != nil {
+		log.Println(err)
+		fmt.Println("HERE0")
+	}
+	defer rows.Close()
+
+	err = rows.Scan(&name, &password)
+	if err != nil {
+		log.Println(err)
+		fmt.Println("HERE1")
+	}
+	log.Println(name, password)
+
+	err = rows.Err()
+	if err != nil {
+		log.Println(err)
+		fmt.Println("HERE2")
+	}
+	defer db.Close()
+	result := "yes"
+	return result
 }
