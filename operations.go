@@ -17,7 +17,7 @@ func printaccounts() {
 	}
 	name := ""
 	password := ""
-	rows, err := db.Query("select * from ACCOUNTS;")
+	rows, err := db.Query("SELECT * FROM ACCOUNTS;")
 	if err != nil {
 		log.Println(err)
 	}
@@ -85,6 +85,7 @@ func insert(user, password string) (message string) {
 }
 
 func checkuser(cuser string, cpassword string) string {
+	result := "no"
 	db, err := sql.Open("mysql", "user:qburstasd@tcp(localhost:3306)/mydb")
 	if err != nil {
 		log.Println(err)
@@ -100,12 +101,16 @@ func checkuser(cuser string, cpassword string) string {
 	}
 	defer rows.Close()
 
-	err = rows.Scan(&name, &password)
-	if err != nil {
-		log.Println(err)
-		fmt.Println("HERE1")
+	for rows.Next() {
+		err := rows.Scan(&name, &password)
+		if err != nil {
+			log.Println(err)
+		}
+		log.Println(name, password, cuser, cpassword)
+		if name == cuser && password == cpassword {
+			result = "yes"
+		}
 	}
-	log.Println(name, password)
 
 	err = rows.Err()
 	if err != nil {
@@ -113,6 +118,6 @@ func checkuser(cuser string, cpassword string) string {
 		fmt.Println("HERE2")
 	}
 	defer db.Close()
-	result := "yes"
+
 	return result
 }

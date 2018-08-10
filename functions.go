@@ -40,14 +40,17 @@ func index(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 		// logic part of log in
 		flag := checkuser(r.Form["username"][0], r.Form["password"][0])
+		responsevalue := ""
 		if flag == "yes" {
+			responsevalue = "Username: " + r.Form["username"][0] + " Password: " + r.Form["password"][0] + " logged in successfully"
 			fmt.Println("LOGIN CORRECT")
 		} else {
+			responsevalue = "Username: " + r.Form["username"][0] + " Password: " + r.Form["password"][0] + "INVALID CREDENTIALS OR UNREGISTERED USER "
 			fmt.Println("INVALID CREDENTIALS OR UNREGISTERED USER")
 		}
 		fmt.Println("username:", r.Form["username"])
 		fmt.Println("password:", r.Form["password"])
-		responsevalue := "Username: " + r.Form["username"][0] + " Password: " + r.Form["password"][0] + " logged in successfully"
+
 		fmt.Fprintf(w, responsevalue) // write data to response
 	}
 }
